@@ -24,6 +24,14 @@ This collection includes:
 - Purpose: A fully‑browser‑based retro Snake Game built with HTML, CSS, and JavaScript.
 - Deployment: Github
 
+## Project 2 : [Memory-Game](https://github.com/JavascriptDon/JavaScript-Games-Collection/tree/memory-game) 
+
+<img width="406" height="433" alt="M-game" src="https://github.com/user-attachments/assets/b9300174-2bd3-4768-9c45-f51b4b7bd1aa" />
+
+- Title: Memory-Game
+- Purpose: A simple, fast, and fun Memory Matching Game built with *HTML*, *CSS*, and *JavaScript*.
+- Deployment: Github
+- 
 
 ## 🛡️ License:
 This project is under the MIT License (MIT). See the LICENSE for more information.
