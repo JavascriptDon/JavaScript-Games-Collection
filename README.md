@@ -58,3 +58,9 @@ npm run preview
 ## Notes
 
 This project is meant for learning and prototyping. It uses Vite for fast local development and bundling.
+
+
+https://github.com/user-attachments/assets/256bf367-faf1-40f1-a1be-2e6f6da32b34
+
+
+
