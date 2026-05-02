@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="./public/favicon.ico" />
+  <title>Snake Game</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      color: white;
+      flex-direction: column;
+    }
+
+    #gameCanvas {
+      background: #222;
+      border: 3px solid #0f0;
+    }
+
+    #score {
+      margin-top: 15px;
+      font-size: 22px;
+    }
+
+    #retroHeader {
+      font-family: "Press Start 2P", monospace;
+      font-size: 28px;
+      color: #00ff6a;
+      text-shadow: 0 0 8px #00ff6a, 0 0 16px #00ff6a;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+      text-align: center;
+    }
+
+    .menu-text {
+      font-family: "Press Start 2P", monospace;
+      font-size: 14px;
+      fill: #00ff6a;
+      text-align: center;
+    }
+
+
+  </style>
+</head>
+
+<body>
+  <h1 id="retroHeader">SNAKE // 2026 EDITION</h1>
+
+  <canvas id="gameCanvas" width="400" height="400"></canvas>
+  <div id="score">Score: 0</div>
+
+  <script>
+const sfxEat = new Audio("./food.mp3");
+const sfxPause = new Audio("./click-3.wav");
+const sfxUnpause = new Audio("./click-3.wav");
+const sfxGameOver = new Audio("./game-over.wav");
+
+let lastTick = 0;
+let tickRate = 150; // milliseconds per move (150ms = slower, 100ms = medium, 70ms = fast)
+
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+const box = 20;
+let snake, direction, food, score;
+let gameState = "MENU"; // MENU, PLAYING, PAUSED, GAMEOVER
+
+document.addEventListener("keydown", handleKey);
+
+function initGame() {
+  snake = [{ x: 9 * box, y: 9 * box }];
+  direction = "RIGHT";
+  score = 0;
+  document.getElementById("score").innerText = "Score: 0";
+
+  food = {
+    x: Math.floor(Math.random() * 20) * box,
+    y: Math.floor(Math.random() * 20) * box
+  };
+}
+
+function handleKey(e) {
+  if (gameState === "MENU" && e.key === "Enter") {
+    gameState = "PLAYING";
+    return;
+  }
+
+  if (gameState === "GAMEOVER" && e.key === "Enter") {
+    initGame();
+    gameState = "PLAYING";
+    return;
+  }
+
+  if (e.key === "p") {
+    if (gameState === "PLAYING") {
+      sfxPause.currentTime = 0;
+      sfxPause.play();
+      
+      gameState = "PAUSED";
+    }
+    else if (gameState === "PAUSED"){
+      sfxUnpause.currentTime = 0;
+      sfxUnpause.play();
+      gameState = "PLAYING";
+    }
+      return;
+  }
+
+  if (e.key === "r") {
+    initGame();
+    gameState = "MENU";
+    return;
+  }
+
+  if (gameState !== "PLAYING") return;
+
+  if (e.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
+  else if (e.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
+  else if (e.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
+  else if (e.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
+}
+
+function drawMenu() {
+  ctx.fillStyle = "#111";
+  ctx.fillRect(0, 0, 400, 400);
+
+  ctx.fillStyle = "#00ff6a";
+  ctx.font = "20px 'Press Start 2P'";
+  ctx.textAlign = "center";
+  ctx.fillText("SNAKE GAME", 200, 120);
+
+  ctx.font = "12px 'Press Start 2P'";
+  ctx.fillText("PRESS ENTER TO PLAY", 200, 200);
+  ctx.fillText("P = PAUSE", 200, 240);
+  ctx.fillText("R = RESET", 200, 280);
+  drawControls();
+
+}
+
+function drawPause() {
+  ctx.fillStyle = "rgba(0,0,0,0.6)";
+  ctx.fillRect(0, 0, 400, 400);
+
+  ctx.fillStyle = "#00ff6a";
+  ctx.font = "16px 'Press Start 2P'";
+  ctx.textAlign = "center";
+  ctx.fillText("PAUSED", 200, 200);
+  drawControls();
+}
+
+function drawGameOver() {
+  ctx.fillStyle = "rgba(0,0,0,0.7)";
+  ctx.fillRect(0, 0, 400, 400);
+
+  ctx.fillStyle = "#ff0040";
+  ctx.font = "18px 'Press Start 2P'";
+  ctx.textAlign = "center";
+  ctx.fillText("GAME OVER", 200, 180);
+
+  ctx.fillStyle = "#00ff6a";
+  ctx.font = "12px 'Press Start 2P'";
+  ctx.fillText("SCORE: " + score, 200, 220);
+  ctx.fillText("PRESS ENTER TO RESTART", 200, 260);
+}
+
+function drawControls() {
+  ctx.fillStyle = "white";
+  ctx.font = "10px 'Press Start 2P'";
+  ctx.textAlign = "right";
+
+  ctx.fillText("↑ ↓ ← →  MOVE", 390, 20);
+}
+
+
+function drawGame() {
+  ctx.clearRect(0, 0, 400, 400);
+
+  // Draw food
+  ctx.fillStyle = "red";
+  ctx.fillRect(food.x, food.y, box, box);
+
+  // Draw snake
+  ctx.fillStyle = "#0f0";
+  snake.forEach(part => ctx.fillRect(part.x, part.y, box, box));
+
+  // Move snake
+  let head = { ...snake[0] };
+  if (direction === "UP") head.y -= box;
+  if (direction === "DOWN") head.y += box;
+  if (direction === "LEFT") head.x -= box;
+  if (direction === "RIGHT") head.x += box;
+
+  // Collision detection
+  if (
+    head.x < 0 || head.x >= 400 ||
+    head.y < 0 || head.y >= 400 ||
+    snake.some(part => part.x === head.x && part.y === head.y)
+  ) {
+    sfxGameOver.currentTime = 0;
+    sfxGameOver.play();
+    
+    gameState = "GAMEOVER";
+    return;
+  }
+
+  snake.unshift(head);
+
+  // Eat food
+  if (head.x === food.x && head.y === food.y) {
+    sfxEat.currentTime = 0;
+    sfxEat.play();
+    
+    score++;
+    document.getElementById("score").innerText = "Score: " + score;
+
+    food = {
+      x: Math.floor(Math.random() * 20) * box,
+      y: Math.floor(Math.random() * 20) * box
+    };
+  } else {
+    snake.pop();
+  }
+  drawControls();
+
+}
+
+function gameLoop(timestamp) {
+  if (gameState === "MENU") {
+    drawMenu();
+    return requestAnimationFrame(gameLoop);
+  }
+
+  if (gameState === "PAUSED") {
+    drawPause();
+    return requestAnimationFrame(gameLoop);
+  }
+
+  if (gameState === "GAMEOVER") {
+    drawGameOver();
+    return requestAnimationFrame(gameLoop);
+  }
+
+  // PLAYING state
+  if (timestamp - lastTick > tickRate) {
+    drawGame();
+    lastTick = timestamp;
+  }
+
+  requestAnimationFrame(gameLoop);
+}
+
+initGame();
+gameLoop();
+</script>
+
+</body>
+</html>
