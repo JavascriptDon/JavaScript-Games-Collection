@@ -23,3 +23,17 @@ This collection includes:
 - Title: Snake-Game 2026 Edition
 - Purpose: A fully‑browser‑based retro Snake Game built with HTML, CSS, and JavaScript.
 - Deployment: Github
+
+
+## 🛡️ License:
+This project is under the MIT License (MIT). See the LICENSE for more information.
+
+## 👨‍💻 Contributions:
+Contributions are always welcome...
+
+- Fork the repository
+- Improve current program by
+- improving functionality
+- adding a new feature
+- bug fixes
+- Push your work and Create a Pull Request
