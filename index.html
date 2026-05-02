@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="./public/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Memory-Game</title>
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <h1>Memory Game</h1>
+    <div class="stats">
+    <span>Time: <span id="time">0</span>s</span>
+    <span>Best: <span id="best">--</span>s</span>
+    <span>Moves: <span id="moves">0</span></span>
+
+   </div>
+
+    <div class="game-container"></div>
+    <button id="resetBtn">Reset Game</button>
+
+    <h2>Leaderboard</h2>
+    <ul id="leaderboard"></ul>
+
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
