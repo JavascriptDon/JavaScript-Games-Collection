@@ -16,8 +16,10 @@ This collection includes:
 - ⌨️ Typing Speed Test
 
 
-## Project 1
+## Project 1 : [Snake-Game](https://github.com/JavascriptDon/JavaScript-Games-Collection/tree/snake-game) 
 
-Title: Snake-Game 2026 Edition
-Purpose: A fully‑browser‑based retro Snake Game built with HTML, CSS, and JavaScript.
-Deployment: Github
+<img width="290" height="292" alt="snake" src="https://github.com/user-attachments/assets/1957d541-df6f-4f71-8266-32ba673c6e79" />
+
+- Title: Snake-Game 2026 Edition
+- Purpose: A fully‑browser‑based retro Snake Game built with HTML, CSS, and JavaScript.
+- Deployment: Github
