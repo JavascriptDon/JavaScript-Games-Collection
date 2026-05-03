@@ -22,7 +22,7 @@ This collection includes:
 
 - Title: Snake-Game 2026 Edition
 - Purpose: A fully‑browser‑based retro Snake Game built with HTML, CSS, and JavaScript.
-- Deployment: Github
+- Deployment: [Github](https://javascriptdon.github.io/JavaScript-Games-Collection/)
 
 ## Project 2 : [Memory-Game](https://github.com/JavascriptDon/JavaScript-Games-Collection/tree/memory-game) 
 
@@ -31,7 +31,14 @@ This collection includes:
 - Title: Memory-Game
 - Purpose: A simple, fast, and fun Memory Matching Game built with *HTML*, *CSS*, and *JavaScript*.
 - Deployment: Github
-- 
+  
+## Project 3 : [whack-a-mole](https://github.com/JavascriptDon/JavaScript-Games-Collection/tree/whack-a-mole) 
+
+<img width="269" height="330" alt="whack-mole" src="https://github.com/user-attachments/assets/39dc8eeb-5ca3-4198-adf9-00a3a04af50c" />
+
+- Title: whack-a-mole
+- Purpose: A simple, fast‑paced Whack‑a‑Mole browser game built with HTML, CSS, and vanilla JavaScript.
+- Deployment: [Netlify](https://whack-a-mole-2026-edition.netlify.app/)
 
 ## 🛡️ License:
 This project is under the MIT License (MIT). See the LICENSE for more information.
